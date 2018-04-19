@@ -10,11 +10,6 @@ public class Point {
     this.y = y;
   }
 
-  public int getSum() {
-    return x + y;
-  }
-
-
   public double distance(Point point) {
     return (Math.hypot(this.x - point.x, this.y - point.y));
   }

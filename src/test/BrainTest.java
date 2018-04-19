@@ -183,6 +183,6 @@ public class BrainTest {
     List<List<Point>> result = calculate.calculate();
 
     //Then
-    assertEquals(623,result.size());
+    assertEquals(623, result.size());
   }
 }
