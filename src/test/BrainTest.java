@@ -173,4 +173,16 @@ public class BrainTest {
     assertEquals(expectedElements, resultElements);
 
   }
+
+  @Test
+  public void acceptanceTestMatrix100x100() {
+    //Given
+    Brain calculate = new Brain(Helper.matrix100x100);
+
+    //When
+    List<List<Point>> result = calculate.calculate();
+
+    //Then
+    assertEquals(623,result.size());
+  }
 }
