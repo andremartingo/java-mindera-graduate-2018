@@ -1,11 +1,10 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import main.Brain;
-import main.Helper;
-import main.Point;
 import org.junit.Test;
+import utils.Helper;
 
 public class BrainTest {
 
@@ -185,4 +184,25 @@ public class BrainTest {
     //Then
     assertEquals(623, result.size());
   }
+
+  @Test
+  public void acceptanceTestMatrix20000x20000() {
+    //Given
+    int[][] matrix = new int[20000][20000];
+    matrix[19999][19999] = 1;
+    matrix[19998][19999] = 1;
+    Brain calculate = new Brain(matrix);
+
+    //When
+    List<List<Point>> result = calculate.calculate();
+
+    //Then
+    Point point1 = new Point(19999,19999);
+    Point point2 = new Point(19998,19999);
+    assertTrue(result.get(0).contains(point1));
+    assertTrue(result.get(0).contains(point2));
+    assertEquals(2, result.get(0).size());
+    assertEquals(1, result.size());
+  }
+
 }
