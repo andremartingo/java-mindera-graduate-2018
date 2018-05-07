@@ -8,20 +8,12 @@ public class Point {
     this.y = y;
   }
 
-  public double distance(Point point) {
-    return (Math.hypot(this.x - point.x, this.y - point.y));
-  }
-
   public String toString() {
     return String.format("[%d,%d]", this.x, this.y);
   }
 
   public int hashCode() {
     return this.toString().hashCode();
-  }
-
-  public boolean isDistanceValid(Point point) {
-    return distance(point) == 1 ? true : false;
   }
 
   @Override
