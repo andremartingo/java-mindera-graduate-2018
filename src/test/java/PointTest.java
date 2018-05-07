@@ -6,32 +6,6 @@ import org.junit.Test;
 public class PointTest {
 
   @Test
-  public void ensureCalculateDistanceBetweenTwoPoints() {
-    //Given
-    Point a = new Point(1, 1);
-    Point b = new Point(0, 1);
-
-    //when
-    double distance = a.distance(b);
-
-    //Given
-    assertEquals(1, distance, 0);
-  }
-
-  @Test
-  public void ensureIsDistanceValidBetweenTwoPoints() {
-    //Given
-    Point a = new Point(1, 1);
-    Point b = new Point(0, 1);
-
-    //when
-    boolean result = a.isDistanceValid(b);
-
-    //Then
-    assertTrue(result);
-  }
-
-  @Test
   public void ensureGetCoordinatesSeparateByCommas() {
     //Given
     Point a = new Point(1, 1);

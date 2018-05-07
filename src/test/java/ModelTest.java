@@ -1,21 +1,19 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import utils.Helper;
 
-public class BrainTest {
-
+public class ModelTest {
 
   @Test
   public void ensureCreate3GroupsWhenLastElementHaveConnectionWithFirstOne() {
     //Given
-    Brain calculate = new Brain(Helper.matrix2);
+    Model brain = new Model(Helper.matrix2);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = brain.labelMatrix();
 
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
@@ -57,10 +55,10 @@ public class BrainTest {
   @Test
   public void ensureCreate1GroupsWhenHaveMatrixWithFullAdjacentCells() {
     //Given
-    Brain calculate = new Brain(Helper.matrix2x2);
+    Model brain = new Model(Helper.matrix2x2);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = brain.labelMatrix();
 
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
@@ -84,12 +82,12 @@ public class BrainTest {
   }
 
   @Test
-  public void ensureDoesntCreateAnyGroupWithEmptyAdjacentCells() {
+  public void ensureCanNotCreateAnyGroupWithEmptyAdjacentCells() {
     //Given
-    Brain calculate = new Brain(Helper.matrix2x3);
+    Model calculate = new Model(Helper.matrix2x3);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = calculate.labelMatrix();
 
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
@@ -107,12 +105,12 @@ public class BrainTest {
   }
 
   @Test
-  public void ensureDoesntCreateAnyGroupWith1AtCorners() {
+  public void ensureCanNotCreateAnyGroupWith1AtCorners() {
     //Given
-    Brain calculate = new Brain(Helper.matrix3x3);
+    Model calculate = new Model(Helper.matrix3x3);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = calculate.labelMatrix();
 
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
@@ -132,10 +130,10 @@ public class BrainTest {
   @Test
   public void acceptanceTest() {
     //Given
-    Brain calculate = new Brain(Helper.matrix);
+    Model calculate = new Model(Helper.matrix);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = calculate.labelMatrix();
 
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
@@ -174,35 +172,26 @@ public class BrainTest {
   }
 
   @Test
-  public void acceptanceTestMatrix100x100() {
-    //Given
-    Brain calculate = new Brain(Helper.matrix100x100);
-
-    //When
-    List<List<Point>> result = calculate.calculate();
-
-    //Then
-    assertEquals(623, result.size());
-  }
-
-  @Test
   public void acceptanceTestMatrix20000x20000() {
     //Given
     int[][] matrix = new int[20000][20000];
     matrix[19999][19999] = 1;
     matrix[19998][19999] = 1;
-    Brain calculate = new Brain(matrix);
+    Model calculate = new Model(matrix);
 
     //When
-    List<List<Point>> result = calculate.calculate();
+    List<List<Point>> result = calculate.labelMatrix();
 
     //Then
-    Point point1 = new Point(19999,19999);
-    Point point2 = new Point(19998,19999);
+    Point point1 = new Point(19999, 19999);
+    Point point2 = new Point(19998, 19999);
     assertTrue(result.get(0).contains(point1));
     assertTrue(result.get(0).contains(point2));
     assertEquals(2, result.get(0).size());
     assertEquals(1, result.size());
   }
+
+
+
 
 }
