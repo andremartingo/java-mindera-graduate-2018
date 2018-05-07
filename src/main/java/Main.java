@@ -5,22 +5,6 @@ import utils.Importer;
 
 public class Main {
 
-  public static int[][] matrix = new int[][]{
-      {0, 0, 0, 1, 0, 0, 1, 1},
-      {0, 0, 1, 1, 1, 0, 1, 1},
-      {0, 0, 0, 0, 0, 0, 1, 0},
-      {0, 0, 0, 1, 0, 0, 1, 1},
-      {0, 0, 0, 1, 0, 0, 1, 1}
-  };
-
-  public static int[][] matrix3 = new int[][]{
-      {0, 0, 0, 1, 0, 0, 1, 1},
-      {0, 0, 1, 1, 1, 0, 1, 1},
-      {0, 1, 1, 0, 0, 0, 1, 0},
-      {0, 0, 0, 1, 0, 0, 1, 1},
-      {0, 0, 0, 1, 0, 0, 1, 1}
-  };
-
   public static void main(String[] args) {
 
     //Protects the program to have an Array Out of Bounds Exception if nothing is passed as argument
@@ -38,14 +22,10 @@ public class Main {
       //Calculate Adjacent Cells
       Model brain = new Model(matrix);
       List<List<Point>> result = brain.labelMatrix();
-      result.toString();
+      printList(result);
     } else {
       System.out.println("Please set the path for the Input File as Program Argument");
     }
-    Model brain = new Model(matrix);
-    List<List<Point>> result = brain.labelMatrix();
-    printList(result);
-
   }
 
   private static void printList(List<List<Point>> result) {

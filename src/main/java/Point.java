@@ -1,9 +1,9 @@
 public class Point {
 
-  private final int x;
-  private final int y;
+  private final short x;
+  private final short y;
 
-  public Point(final int x, final int y) {
+  public Point(final short x, final short y) {
     this.x = x;
     this.y = y;
   }

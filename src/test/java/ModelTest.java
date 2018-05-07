@@ -20,22 +20,22 @@ public class ModelTest {
     List<Point> expected1 = new ArrayList<>();
     List<Point> expected2 = new ArrayList<>();
     List<Point> expected3 = new ArrayList<>();
-    expected1.add(new Point(0, 3));
-    expected1.add(new Point(1, 1));
-    expected1.add(new Point(1, 2));
-    expected1.add(new Point(1, 3));
-    expected1.add(new Point(1, 4));
-    expected2.add(new Point(0, 6));
-    expected2.add(new Point(0, 7));
-    expected2.add(new Point(1, 6));
-    expected2.add(new Point(1, 7));
-    expected2.add(new Point(2, 6));
-    expected2.add(new Point(3, 6));
-    expected2.add(new Point(3, 7));
-    expected2.add(new Point(4, 6));
-    expected2.add(new Point(4, 7));
-    expected3.add(new Point(3, 3));
-    expected3.add(new Point(4, 3));
+    expected1.add(new Point((short)0, (short)3));
+    expected1.add(new Point((short)1, (short)1));
+    expected1.add(new Point((short)1, (short)2));
+    expected1.add(new Point((short)1, (short)3));
+    expected1.add(new Point((short)1, (short)4));
+    expected2.add(new Point((short)0, (short)6));
+    expected2.add(new Point((short)0, (short)7));
+    expected2.add(new Point((short)1, (short)6));
+    expected2.add(new Point((short)1, (short)7));
+    expected2.add(new Point((short)2, (short)6));
+    expected2.add(new Point((short)3, (short)6));
+    expected2.add(new Point((short)3, (short)7));
+    expected2.add(new Point((short)4, (short)6));
+    expected2.add(new Point((short)4, (short)7));
+    expected3.add(new Point((short)3, (short)3));
+    expected3.add(new Point((short)4, (short)3));
     expected.add(expected1);
     expected.add(expected2);
     expected.add(expected3);
@@ -63,10 +63,10 @@ public class ModelTest {
     //Then
     List<List<Point>> expected = new ArrayList<List<Point>>();
     List<Point> expected1 = new ArrayList<>();
-    expected1.add(new Point(0, 0));
-    expected1.add(new Point(0, 1));
-    expected1.add(new Point(1, 0));
-    expected1.add(new Point(1, 1));
+    expected1.add(new Point((short)0, (short)0));
+    expected1.add(new Point((short)0, (short)1));
+    expected1.add(new Point((short)1, (short)0));
+    expected1.add(new Point((short)1, (short)1));
     expected.add(expected1);
     assertEquals(expected.size(), result.size());
     int expectedElements = 0;
@@ -140,21 +140,21 @@ public class ModelTest {
     List<Point> expected1 = new ArrayList<>();
     List<Point> expected2 = new ArrayList<>();
     List<Point> expected3 = new ArrayList<>();
-    expected1.add(new Point(0, 3));
-    expected1.add(new Point(1, 2));
-    expected1.add(new Point(1, 3));
-    expected1.add(new Point(1, 4));
-    expected2.add(new Point(0, 6));
-    expected2.add(new Point(0, 7));
-    expected2.add(new Point(1, 6));
-    expected2.add(new Point(1, 7));
-    expected2.add(new Point(2, 6));
-    expected2.add(new Point(3, 6));
-    expected2.add(new Point(3, 7));
-    expected2.add(new Point(4, 6));
-    expected2.add(new Point(4, 7));
-    expected3.add(new Point(3, 3));
-    expected3.add(new Point(4, 3));
+    expected1.add(new Point((short)0, (short)3));
+    expected1.add(new Point((short)1, (short)2));
+    expected1.add(new Point((short)1, (short)3));
+    expected1.add(new Point((short)1, (short)4));
+    expected2.add(new Point((short)0, (short)6));
+    expected2.add(new Point((short)0, (short)7));
+    expected2.add(new Point((short)1, (short)6));
+    expected2.add(new Point((short)1, (short)7));
+    expected2.add(new Point((short)2, (short)6));
+    expected2.add(new Point((short)3, (short)6));
+    expected2.add(new Point((short)3, (short)7));
+    expected2.add(new Point((short)4, (short)6));
+    expected2.add(new Point((short)4, (short)7));
+    expected3.add(new Point((short)3, (short)3));
+    expected3.add(new Point((short)4, (short)3));
     expected.add(expected1);
     expected.add(expected2);
     expected.add(expected3);
@@ -183,12 +183,48 @@ public class ModelTest {
     List<List<Point>> result = calculate.labelMatrix();
 
     //Then
-    Point point1 = new Point(19999, 19999);
-    Point point2 = new Point(19998, 19999);
+    Point point1 = new Point((short)19999, (short)19999);
+    Point point2 = new Point((short)19998, (short)19999);
     assertTrue(result.get(0).contains(point1));
     assertTrue(result.get(0).contains(point2));
     assertEquals(2, result.get(0).size());
     assertEquals(1, result.size());
+  }
+
+  @Test
+  public void acceptanceTestMatrix1000x1000() {
+    //Given
+    int[][] matrix = new int[1000][1000];
+    for (int row = 0; row < matrix.length; row ++ ){
+      for (int col = 0 ; col < matrix.length; col++){
+        matrix[row][col] = 1;
+      }
+    }
+    Model calculate = new Model(matrix);
+
+    //When
+    List<List<Point>> result = calculate.labelMatrix();
+
+    //Then
+    assertEquals(1000000,result.get(0).size());
+  }
+
+  @Test
+  public void acceptanceTestMatrix10000x10000() {
+    //Given
+    int[][] matrix = new int[10000][10000];
+    for (int row = 0; row < matrix.length; row ++ ){
+      for (int col = 0 ; col < matrix.length; col++){
+        matrix[row][col] = 1;
+      }
+    }
+    Model calculate = new Model(matrix);
+
+    //When
+    List<List<Point>> result = calculate.labelMatrix();
+
+    //Then
+    System.out.println(result.toString());
   }
 
 

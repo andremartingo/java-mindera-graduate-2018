@@ -199,10 +199,10 @@ public class Model implements Label {
         if (isAdjacent(row, col)) {
           if (result.containsKey(get(row,col))) {
             List<Point> list = result.get(get(row,col));
-            list.add(new Point(row, col));
+            list.add(new Point((short)row, (short)col));
           } else {
             List<Point> list = new ArrayList<>();
-            list.add(new Point(row, col));
+            list.add(new Point((short)row, (short)col));
             result.put(get(row,col), list);
           }
         }

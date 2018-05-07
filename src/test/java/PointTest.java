@@ -8,7 +8,7 @@ public class PointTest {
   @Test
   public void ensureGetCoordinatesSeparateByCommas() {
     //Given
-    Point a = new Point(1, 1);
+    Point a = new Point((short)1, (short)1);
 
     //When
     String result = a.toString();
@@ -21,7 +21,7 @@ public class PointTest {
   @Test
   public void ensureHashCodeReturnsExpectedInteger() {
     //Given
-    Point a = new Point(1, 1);
+    Point a = new Point((short)1, (short)1);
 
     //When
     int expected = "[1,1]".hashCode();
