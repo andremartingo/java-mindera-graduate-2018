@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Model {
@@ -15,6 +16,7 @@ public class Model {
   public int conflict = 0;
 
   private HashMap<Integer, List<Integer>> hmap = new HashMap<>();
+  private HashMap<Integer, List<Point>> result = new HashMap<>();
 
   public Model(int[][] matrix) {
     this.matrix = matrix;
@@ -27,6 +29,7 @@ public class Model {
       updateRow(row);
     }
     updateGroups();
+    mapGroups();
   }
 
   public void updateRow(int row) {
@@ -122,6 +125,14 @@ public class Model {
     });
   }
 
+  public void printResult() {
+    result.forEach((k, v) -> {
+      System.out.print("Key : " + k + " Value : ");
+      System.out.print(v.toString());
+      System.out.print("\n");
+    });
+  }
+
   public void print() {
     for (int row = 0; row < matrix.length; row++) {
       for (int col = 0; col < matrix[row].length; col++) {
@@ -145,6 +156,23 @@ public class Model {
       for (Integer val : values) {
         if (val == matrix[row][col]) {
           matrix[row][col] = key;
+        }
+      }
+    }
+  }
+
+  public void mapGroups() {
+    for (int row = 0; row < matrix.length; row++) {
+      for (int col = 0; col < matrix[row].length; col++) {
+        if (matrix[row][col] > 0) {
+          if (result.containsKey(matrix[row][col])) {
+            List<Point> list = result.get(matrix[row][col]);
+            list.add(new Point(row, col));
+          } else {
+            List<Point> list = new ArrayList<>();
+            list.add(new Point(row, col));
+            result.put(matrix[row][col], list);
+          }
         }
       }
     }

@@ -52,6 +52,7 @@ public class Main {
     model.labelMatrix();
     model.print();
     model.printHashmap();
+    model.printResult();
 
   }
 
