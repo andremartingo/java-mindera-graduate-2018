@@ -6,6 +6,7 @@ public class Model implements Label {
 
   private int[][] matrix;
   private int label = 1;
+  private final int length;
 
   private HashMap<Integer, List<Integer>> conflicts = new HashMap<>();
   private HashMap<Integer, List<Point>> result = new HashMap<>();
@@ -13,6 +14,7 @@ public class Model implements Label {
   public Model(int[][] matrix) {
     this.matrix = matrix;
     conflicts.put(1, new ArrayList<>());
+    length = matrix.length;
   }
 
   /**
@@ -20,7 +22,7 @@ public class Model implements Label {
    */
   public List<List<Point>> labelMatrix() {
     updateFirstRow();
-    for (int row = 1; row < matrix.length; row++) {
+    for (int row = 1; row < length; row++) {
       updateRow(row);
     }
     updateGroups();
@@ -32,12 +34,12 @@ public class Model implements Label {
    * Label First Row
    */
   private void updateFirstRow() {
-    for (int col = 0; col < matrix[0].length; col++) {
-      if (matrix[0][col] == 1) {
+    for (int col = 0; col < length; col++) {
+      if (get(0, col) == 1) {
         if (isAdjacentLeft(0, col)) {
-          matrix[0][col] = matrix[0][col - 1];
+          set(0, col, get(0, col - 1));
         } else {
-          matrix[0][col] = label;
+          set(0, col, label);
           conflicts.put(label, new ArrayList<>());
           label++;
         }
@@ -49,7 +51,7 @@ public class Model implements Label {
    * Label Row Elements
    */
   private void updateRow(int row) {
-    for (int col = 0; col < matrix[row].length; col++) {
+    for (int col = 0; col < length; col++) {
       if (get(row, col) == 1) {
         if (existConflict(row, col)) {
           set(row, col, get(row, col - 1));
@@ -94,30 +96,27 @@ public class Model implements Label {
     if (col - 1 < 0) {
       return false;
     }
-    if (matrix[row][col - 1] > 0) {
-      return true;
-    }
-    return false;
+    return (get(row, col - 1) > 0);
   }
 
   /**
    * Check if a point is Adjacent on the Right side
    */
   private boolean isAdjacentRight(int row, int col) {
-    if (col + 1 >= matrix[row].length) {
+    if (col + 1 >= length) {
       return false;
     }
-    return (matrix[row][col + 1] > 0);
+    return (get(row, col + 1) > 0);
   }
 
   /**
    * Check if a point is Adjacent on the Bottom side
    */
   private boolean isAdjacentDown(int row, int col) {
-    if (row + 1 >= matrix.length) {
+    if (row + 1 >= length) {
       return false;
     }
-    return (matrix[row + 1][col] > 0);
+    return (get(row + 1, col) > 0);
   }
 
 
@@ -128,26 +127,23 @@ public class Model implements Label {
     if (row - 1 < 0) {
       return false;
     }
-    if (matrix[row - 1][col] > 0) {
-      return true;
-    }
-    return false;
+    return (get(row - 1, col) > 0);
   }
 
   /**
    * Check if a point is Adjacent
    */
   private boolean isAdjacent(int row, int col) {
-    if (matrix[row][col] > 0 && isAdjacentLeft(row, col)) {
+    if (get(row, col) > 0 && isAdjacentLeft(row, col)) {
       return true;
     }
-    if (matrix[row][col] > 0 && isAdjacentUp(row, col)) {
+    if (get(row, col) > 0 && isAdjacentUp(row, col)) {
       return true;
     }
-    if (matrix[row][col] > 0 && isAdjacentRight(row, col)) {
+    if (get(row, col) > 0 && isAdjacentRight(row, col)) {
       return true;
     }
-    if (matrix[row][col] > 0 && isAdjacentDown(row, col)) {
+    if (get(row, col) > 0 && isAdjacentDown(row, col)) {
       return true;
     }
     return false;
@@ -160,11 +156,11 @@ public class Model implements Label {
     if (col - 1 < 0 || row - 1 < 0) {
       return false;
     }
-    if (matrix[row - 1][col] > 0 && matrix[row][col - 1] > 0
-        && matrix[row - 1][col] != matrix[row][col - 1]) {
-      int root = findRoot(matrix[row - 1][col]);
+    if (get(row - 1, col) > 0 && get(row, col - 1) > 0
+        && get(row - 1, col) != get(row, col - 1)) {
+      int root = findRoot(get(row - 1, col));
       List<Integer> list = conflicts.get(root);
-      list.add(matrix[row][col - 1]);
+      list.add(get(row, col - 1));
       return true;
     }
     return false;
@@ -175,8 +171,8 @@ public class Model implements Label {
    * Update Matrix Numbers with Root Label
    */
   public void updateGroups() {
-    for (int row = 0; row < matrix.length; row++) {
-      for (int col = 0; col < matrix.length; col++) {
+    for (int row = 0; row < length; row++) {
+      for (int col = 0; col < length; col++) {
         updateGroup(row, col);
       }
     }
@@ -189,8 +185,8 @@ public class Model implements Label {
     for (Integer key : conflicts.keySet()) {
       List<Integer> values = conflicts.get(key);
       for (Integer val : values) {
-        if (val == matrix[row][col]) {
-          matrix[row][col] = key;
+        if (val == get(row, col)) {
+          set(row, col, key);
         }
       }
     }
@@ -200,16 +196,16 @@ public class Model implements Label {
    * Add to HashMap all Adjacent Points
    */
   private void mapGroups() {
-    for (int row = 0; row < matrix.length; row++) {
-      for (int col = 0; col < matrix[row].length; col++) {
+    for (int row = 0; row < length; row++) {
+      for (int col = 0; col < length; col++) {
         if (isAdjacent(row, col)) {
-          if (result.containsKey(matrix[row][col])) {
-            List<Point> list = result.get(matrix[row][col]);
+          if (result.containsKey(get(row, col))) {
+            List<Point> list = result.get(get(row, col));
             list.add(new Point(row, col));
           } else {
             List<Point> list = new ArrayList<>();
             list.add(new Point(row, col));
-            result.put(matrix[row][col], list);
+            result.put(get(row, col), list);
           }
         }
       }
