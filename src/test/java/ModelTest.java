@@ -190,44 +190,4 @@ public class ModelTest {
     assertEquals(2, result.get(0).size());
     assertEquals(1, result.size());
   }
-
-  @Test
-  public void acceptanceTestMatrix1000x1000() {
-    //Given
-    int[][] matrix = new int[1000][1000];
-    for (int row = 0; row < matrix.length; row ++ ){
-      for (int col = 0 ; col < matrix.length; col++){
-        matrix[row][col] = 1;
-      }
-    }
-    Model calculate = new Model(matrix);
-
-    //When
-    List<List<Point>> result = calculate.labelMatrix();
-
-    //Then
-    assertEquals(1000000,result.get(0).size());
-  }
-
-  @Test
-  public void acceptanceTestMatrix10000x10000() {
-    //Given
-    int[][] matrix = new int[10000][10000];
-    for (int row = 0; row < matrix.length; row ++ ){
-      for (int col = 0 ; col < matrix.length; col++){
-        matrix[row][col] = 1;
-      }
-    }
-    Model calculate = new Model(matrix);
-
-    //When
-    List<List<Point>> result = calculate.labelMatrix();
-
-    //Then
-    System.out.println(result.toString());
-  }
-
-
-
-
 }

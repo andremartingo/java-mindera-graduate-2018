@@ -194,14 +194,15 @@ public class Model implements Label {
    * Add to HashMap all Adjacent Points
    */
   private void mapGroups() {
+    List<Point> list = new ArrayList<>();
     for (int row = 0; row < matrix.length; row++) {
       for (int col = 0; col < matrix[row].length; col++) {
         if (isAdjacent(row, col)) {
           if (result.containsKey(get(row,col))) {
-            List<Point> list = result.get(get(row,col));
+            list = result.get(get(row,col));
             list.add(new Point((short)row, (short)col));
           } else {
-            List<Point> list = new ArrayList<>();
+            list = new ArrayList<>();
             list.add(new Point((short)row, (short)col));
             result.put(get(row,col), list);
           }
