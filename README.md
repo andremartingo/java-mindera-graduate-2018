@@ -34,6 +34,12 @@ cd java-mindera-graduate-2018
 mvn package
 ```
 
+## Run Tests
+
+```bash
+mvn test
+```
+
 ## Usage
 
 ```bash
